@@ -1,0 +1,25 @@
+version: '3.7'
+
+services:
+  cbp_app:
+    image: registry.gitlab.com/flexbox/docker/centos-php7:latest
+    container_name: cbp_app
+    ports:
+      - 80:80
+      - 10500:10500
+    volumes:
+      - ./:/html
+      - ./.docker/nginx.conf:/etc/nginx/conf.d/default.conf
+      - ./.docker/nginx-adminer.conf:/etc/nginx/conf.d/adminer.conf
+  cbp_mysql:
+    image: mysql:5
+    container_name: cbp_mysql
+    ports:
+      - 3306:3306
+    volumes:
+      - ./.docker/mysql:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: rootroot
+      MYSQL_DATABASE: cbp
+      MYSQL_USER: cbp
+      MYSQL_PASSWORD: cbp
